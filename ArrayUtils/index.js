@@ -136,4 +136,43 @@ function testFilter(input, actual, test) {
   const test3 = (elem) => elem % 2 !== 0;
   const output3 = filter(input3, test3);
   testFilter(input3, output3, test3);
-})()
+})();
+
+
+/**
+ * Array map clone.
+ * 
+ * @param {*} array 
+ * @param {*} transform 
+ * @returns 
+ */
+
+function map(array, transform) {
+  const output = [];
+
+  for (let i = 0; i < array.length; i++) {
+    output.push(transform(array[i]));
+  }
+
+  return output;
+}
+
+function testMap(input, actual, transform) {
+  const expected = input.map(transform);
+
+  if (JSON.stringify(actual) !== JSON.stringify(expected)) {
+    throw new Error('Test failed');
+  }
+}
+
+(function () {
+  const input1 = [1, 2, 3];
+  const transform1 = (elem) => elem * 2;
+  const output1 = map(input1, transform1);
+  testMap(input1, output1, transform1);
+
+  const input2 = [];
+  const transform2 = (elem) => elem;
+  const output2 = map(input2, transform2);
+  testMap(input2, output2, transform2);
+})();
