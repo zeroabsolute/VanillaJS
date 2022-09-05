@@ -48,6 +48,7 @@ function testReverse(actual, expected) {
   }
 )();
 
+
 /**
  * Array to list.
  * List node: { value: number, next: listNode }
@@ -91,3 +92,48 @@ function testArrayToList(input) {
   testArrayToList([1]);
   testArrayToList([0, 0, 0]);
 })();
+
+
+/**
+ * Array filter clone.
+ * 
+ * @param {*} array 
+ * @param {*} test 
+ */
+
+function filter(array, test) {
+  const output = [];
+
+  for (let i = 0; i < array.length; i++) {
+    if (test(array[i])) {
+      output.push(array[i]);
+    }
+  }
+
+  return output;
+}
+
+function testFilter(input, actual, test) {
+  const expected = input.filter(test);
+
+  if (JSON.stringify(actual) !== JSON.stringify(expected)) {
+    throw new Error('Test failed');
+  }
+}
+
+(function () {
+  const input1 = [1, 2, 3];
+  const test1 = (elem) => elem % 2 === 0;
+  const output1 = filter(input1, test1);
+  testFilter(input1, output1, test1);
+
+  const input2 = [];
+  const test2 = (elem) => elem % 2 === 0;
+  const output2 = filter(input2, test2);
+  testFilter(input2, output2, test2);
+
+  const input3 = [2, 4, 6];
+  const test3 = (elem) => elem % 2 !== 0;
+  const output3 = filter(input3, test3);
+  testFilter(input3, output3, test3);
+})()
