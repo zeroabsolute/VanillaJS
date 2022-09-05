@@ -176,3 +176,44 @@ function testMap(input, actual, transform) {
   const output2 = map(input2, transform2);
   testMap(input2, output2, transform2);
 })();
+
+
+/**
+ * Array reduce clone.
+ * 
+ * @param {*} array 
+ * @param {*} transform 
+ * @returns 
+ */
+
+function reduce(array, reducer, initialValue) {
+  let accumulator = initialValue;
+
+  for (let i = 0; i < array.length; i++) {
+    accumulator = reducer(accumulator, array[i]);
+  }
+
+  return accumulator;
+}
+
+function testReduce(input, actual, reducer, initialValue) {
+  const expected = input.reduce(reducer, initialValue);
+
+  if (JSON.stringify(actual) !== JSON.stringify(expected)) {
+    throw new Error('Test failed');
+  }
+}
+
+(function () {
+  const input1 = [1, 2, 3];
+  const initialValue1 = 0;
+  const reducer1 = (accumulator, current) => accumulator + current;
+  const output1 = reduce(input1, reducer1, initialValue1);
+  testReduce(input1, output1, reducer1, initialValue1);
+
+  const input2 = [[1], [2], [3]];
+  const initialValue2 = [];
+  const reducer2 = (accumulator, current) => [...accumulator, ...current];
+  const output2 = reduce(input2, reducer2, initialValue2);
+  testReduce(input2, output2, reducer2, initialValue2);
+})();
