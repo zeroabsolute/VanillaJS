@@ -39,10 +39,13 @@ function buildInterface() {
 
   normalInput.addEventListener('keyup', (event) => onNormalInputChange(event, normalOutput));
   debouncedInput.addEventListener(
-    'keyup', 
+    'keyup',
     debounce((event) => onDebouncedInputChange(event, debouncedOutput), 200),
   );
-  throttledInput.addEventListener('keyup', (event) => onThrottledInputChange(event, throttledOutput));
+  throttledInput.addEventListener(
+    'keyup',
+    throttle((event) => onThrottledInputChange(event, throttledOutput), 200),
+  );
 }
 
 function onNormalInputChange(event, normalOutput) {
@@ -83,5 +86,18 @@ function debounce(fn, timeout) {
  */
 
 function throttle(fn, timeout) {
-  return (...args) => fn(...args);
+  let isWaiting = false;
+
+  return (...args) => {
+    if (isWaiting) {
+      return;
+    }
+
+    isWaiting = true;
+    fn(...args);
+
+    setTimeout(() => {
+      isWaiting = false;
+    }, timeout);
+  }
 }
