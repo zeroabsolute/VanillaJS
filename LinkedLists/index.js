@@ -25,7 +25,7 @@ function display(head) {
     currentNode = currentNode.next;
   }
 
-  return values.join(' -> ');
+  return values?.length ? values.join(' -> ') : null;
 }
 
 
@@ -73,7 +73,7 @@ function insertAfter(head, refNode, newValue) {
   }
 
   const newNode = new ListNode(newValue);
-  
+
   newNode.next = currentNode.next;
   currentNode.next = newNode;
 
@@ -88,9 +88,96 @@ function append(head, newValue) {
   }
 
   const newNode = new ListNode(newValue);
-  
+
   newNode.next = null;
   currentNode.next = newNode;
+
+  return head;
+}
+
+
+/**
+ * Delete method.
+ * 
+ * First value occurrence: O(n) time complexity, O(1) space complexity
+ * By index: O(n) time complexity, O(1) space complexity
+ */
+
+testDelete();
+
+function testDelete() {
+  console.log('|-----------------------------------------------------------------------------|');
+  console.log('| DELETION METHODS                                                            |');
+  console.log('|-----------------------------------------------------------------------------|');
+
+  let head = new ListNode(1);
+  append(head, 2);
+  append(head, 3);
+  append(head, 4);
+  append(head, 5);
+  console.log('Before delete', display(head));
+
+  deleteFirstOccurrence(head, 5);
+  console.log('After deleting the last node', display(head));
+
+  head = deleteFirstOccurrence(head, 1);
+  console.log('After deleting the first node', display(head));
+
+  deleteFirstOccurrence(head, 3);
+  console.log('After deleting the middle node', display(head));
+
+  deleteFirstOccurrence(head, 10);
+  console.log('After trying to delete an non-existing node', display(head));
+
+  deleteByIndex(head, 10);
+  console.log('After trying to delete an non-existing node by index', display(head));
+
+  deleteByIndex(head, 1);
+  console.log('After deleting the last node by index', display(head));
+
+  head = deleteByIndex(head, 0);
+  console.log('After deleting the first node by index', display(head));
+}
+
+function deleteFirstOccurrence(head, value) {
+  if (head.value === value) {
+    head = head.next;
+
+    return head;
+  }
+
+  let currentNode = head;
+
+  while (currentNode.next && currentNode.next.value !== value) {
+    currentNode = currentNode.next;
+  }
+
+  if (currentNode) {
+    currentNode.next = currentNode.next?.next || null;
+  }
+
+  return currentNode;
+}
+
+function deleteByIndex(head, indexToDelete) {
+  let index = 0;
+
+  if (indexToDelete === 0) {
+    head = head.next;
+
+    return head;
+  }
+
+  let currentNode = head;
+
+  while (currentNode) {
+    if (index === indexToDelete - 1) {
+      currentNode.next = currentNode.next?.next;
+    }
+
+    currentNode = currentNode.next;
+    index++;
+  }
 
   return head;
 }
