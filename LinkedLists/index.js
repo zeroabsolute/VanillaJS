@@ -97,7 +97,7 @@ function append(head, newValue) {
 
 
 /**
- * Delete method.
+ * Delete methods.
  * 
  * First value occurrence: O(n) time complexity, O(1) space complexity
  * By index: O(n) time complexity, O(1) space complexity
@@ -180,4 +180,64 @@ function deleteByIndex(head, indexToDelete) {
   }
 
   return head;
+}
+
+
+/**
+ * List length methods.
+ * 
+ * Iterative solution: O(n) time complexity, O(1) space complexity
+ * Recursive solution: O(n) time complexity, O(n) space complexity
+ */
+
+testLength();
+
+function testLength() {
+  console.log('|-----------------------------------------------------------------------------|');
+  console.log('| LENGTH METHODS                                                              |');
+  console.log('|-----------------------------------------------------------------------------|');
+
+  const head1 = new ListNode(1);
+  append(head1, 2);
+  append(head1, 3);
+  append(head1, 4);
+  append(head1, 5);
+  console.log('Input list with 5 nodes', display(head1));
+
+  const head2 = new ListNode(1);
+  console.log('Input list with 1 node', display(head2));
+
+  let list1Length = lengthIterative(head1);
+  console.log('List 1 length iterative: ', list1Length);
+  list1Length = lengthRecursive(head1);
+  console.log('List 1 length recursive: ', list1Length);
+
+  let list2Length = lengthIterative(head2);
+  console.log('List 2 length iterative: ', list2Length);
+  list2Length = lengthRecursive(head2);
+  console.log('List 2 length recursive: ', list2Length);
+
+  let list3Length = lengthIterative(null);
+  console.log('Empty list length iterative: ', list3Length);
+  list3Length = lengthRecursive(null);
+  console.log('Empty list length recursive: ', list3Length);
+}
+
+function lengthIterative(head) {
+  let length = 0;
+
+  while (head) {
+    length++;
+    head = head.next;
+  }
+
+  return length;
+}
+
+function lengthRecursive(head) {
+  if (!head) {
+    return 0;
+  }
+
+  return 1 + lengthRecursive(head.next);
 }
