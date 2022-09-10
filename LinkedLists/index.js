@@ -347,3 +347,67 @@ function detectLoopUsingExtraNode(head) {
 
   return false;
 }
+
+
+/**
+ * Calculating loop length.
+ * 
+ * Using two pointers: O(n) time complexity, O(1) space complexity
+ */
+
+testLoopLengthCalculation();
+
+function testLoopLengthCalculation() {
+  console.log('|-----------------------------------------------------------------------------|');
+  console.log('| LOOP LENGTH CALCULATION METHODS                                             |');
+  console.log('|-----------------------------------------------------------------------------|');
+
+  const node11 = new ListNode(1);
+  const node12 = new ListNode(2);
+  const node13 = new ListNode(3);
+  const node14 = new ListNode(4);
+  const node15 = new ListNode(5);
+  node11.next = node12;
+  node12.next = node13;
+  node13.next = node14;
+  node14.next = node15;
+  node15.next = node13;
+
+  const head2 = new ListNode(1);
+  append(head2, 2);
+  append(head2, 3);
+  append(head2, 4);
+  append(head2, 5);
+  console.log('Input list', display(head2));
+
+  let list1LoopLength = calculateLoopLengthUsingTwoPointers(node11);
+  let list2LoopLength = calculateLoopLengthUsingTwoPointers(head2);
+
+  console.log(`Loop length for List 1: ${list1LoopLength}`);
+  console.log(`Loop length for List 2: ${list2LoopLength}`);
+}
+
+function calculateLoopLengthUsingTwoPointers(head) {
+  let p1 = head; // will move with a step of 1 node at a time
+  let p2 = head; // will move with a step of 2 nodes at a time
+  let metOnce = false;
+  let loopLength = 0;
+
+  while (head) {
+    p1 = p1?.next;
+    p2 = p2?.next?.next;
+    head = head.next;
+
+    if (p1 === p2) {
+      if (metOnce) {
+        return loopLength;
+      }
+
+      metOnce = true;
+    }
+
+    loopLength = metOnce ? loopLength + 1 : loopLength;
+  }
+
+  return loopLength;
+}
