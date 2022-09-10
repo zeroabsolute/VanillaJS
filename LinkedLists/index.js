@@ -241,3 +241,109 @@ function lengthRecursive(head) {
 
   return 1 + lengthRecursive(head.next);
 }
+
+
+/**
+ * Detecting loops.
+ * 
+ * Using a set: O(n) time complexity, O(n) space complexity
+ * Using two pointers: O(n) time complexity, O(1) space complexity
+ * Using a helper node: O(n) time complexity, O(1) space complexity
+ */
+
+testLoopDetection();
+
+function testLoopDetection() {
+  console.log('|-----------------------------------------------------------------------------|');
+  console.log('| LOOP DETECTION METHODS                                                      |');
+  console.log('|-----------------------------------------------------------------------------|');
+
+  const node11 = new ListNode(1);
+  const node12 = new ListNode(2);
+  const node13 = new ListNode(3);
+  const node14 = new ListNode(4);
+  const node15 = new ListNode(5);
+  node11.next = node12;
+  node12.next = node13;
+  node13.next = node14;
+  node14.next = node15;
+  node15.next = node13;
+
+  const head2 = new ListNode(1);
+  append(head2, 2);
+  append(head2, 3);
+  append(head2, 4);
+  append(head2, 5);
+  console.log('Input list', display(head2));
+
+  let list1HasLoop = detectLoopUsingSet(node11);
+  let list2HasLoop = detectLoopUsingSet(head2);
+
+  console.log(`Detect loop using a set: List 1 ${list1HasLoop ? 'has' : 'does not have'} a loop`);
+  console.log(`Detect loop using a set: List 2 ${list2HasLoop ? 'has' : 'does not have'} a loop`);
+
+  list1HasLoop = detectLoopUsingTwoPointers(node11);
+  list2HasLoop = detectLoopUsingTwoPointers(head2);
+
+  console.log(`Detect loop using two pointers: List 1 ${list1HasLoop ? 'has' : 'does not have'} a loop`);
+  console.log(`Detect loop using two pointers: List 2 ${list2HasLoop ? 'has' : 'does not have'} a loop`);
+
+  list1HasLoop = detectLoopUsingExtraNode(node11);
+  list2HasLoop = detectLoopUsingExtraNode(head2);
+
+  console.log(`Detect loop using an extra node: List 1 ${list1HasLoop ? 'has' : 'does not have'} a loop`);
+  console.log(`Detect loop using an extra node: List 2 ${list2HasLoop ? 'has' : 'does not have'} a loop`);
+}
+
+function detectLoopUsingSet(head) {
+  const set = new Set();
+
+  while (head) {
+    if (set.has(head.value)) {
+      return true;
+    }
+
+    set.add(head.value);
+    head = head.next;
+  }
+
+  return false;
+}
+
+function detectLoopUsingTwoPointers(head) {
+  let p1 = head; // will move with a step of 1 node at a time
+  let p2 = head; // will move with a step of 2 nodes at a time
+
+  while (head) {
+    p1 = p1?.next;
+    p2 = p2?.next?.next;
+    head = head.next;
+
+    // By going at different speeds, if there is a loop the two pointers will meet at some point
+    if (p1 === p2) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function detectLoopUsingExtraNode(head) {
+  let temp = new ListNode(0);
+
+  // We will update each list node pointer to point to the temp node.
+  // While iterating, we will check if a pointer is already pointing to this node.
+  // If yes, we have visited the current node before, so we have a loop.
+
+  while (head) {
+    if (head.next === temp) {
+      return true;
+    }
+
+    let next = head.next;
+    head.next = temp;
+    head = next;
+  }
+
+  return false;
+}
