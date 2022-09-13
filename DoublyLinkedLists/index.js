@@ -40,7 +40,7 @@ function display(head) {
  * Insert methods.
  * 
  * Prepend: O(1) time complexity, O(1) space complexity
- * Insert at: O(n) time complexity, O(1) space complexity
+ * Insert at: O(1) time complexity, O(1) space complexity
  * Append: O(n) time complexity, O(1) space complexity
  */
 
@@ -102,6 +102,66 @@ function append(head, newValue) {
 
   currentNode.next = newNode;
   newNode.prev = currentNode;
+
+  return head;
+}
+
+
+/**
+ * Delete method.
+ * 
+ * O(1) time complexity, O(1) space complexity
+ */
+
+testDelete();
+
+function testDelete() {
+  console.log('|-----------------------------------------------------------------------------|');
+  console.log('| DELETION METHODS                                                            |');
+  console.log('|-----------------------------------------------------------------------------|');
+
+  let head = new ListNode(1);
+  append(head, 2);
+  append(head, 3);
+  append(head, 4);
+  append(head, 5);
+  console.log('Before delete', display(head));
+
+  head = deleteNode(head, head);
+  console.log('After deleting the head', display(head));
+
+  head = deleteNode(head, head.next);
+  console.log('After deleting a node in the middle', display(head));
+
+  head = deleteNode(head, head.next.next);
+  console.log('After deleting the tail', display(head));
+
+  head = deleteNode(head, head.next);
+  console.log('After deleting the tail again', display(head));
+
+  head = deleteNode(head, head);
+  console.log('After deleting the last node', display(head));
+}
+
+function deleteNode(head, node) {
+  if (!(head || node)) {
+    return null;
+  }
+
+  const isFirstNode = node.prev === null;
+  const isLastNode = node.next === null;
+
+  if (isFirstNode) {
+    head = head.next;
+  }
+
+  if (!isLastNode) {
+    node.next.prev = node.prev;
+  }
+
+  if (!isFirstNode) {
+    node.prev.next = node.next;
+  }
 
   return head;
 }
