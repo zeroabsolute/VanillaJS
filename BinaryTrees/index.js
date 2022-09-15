@@ -91,6 +91,32 @@ class BinaryTree {
     postorder(this.root);
     return output;
   }
+
+  // Level order traversal
+  printLevelOrder() {
+    const output = [];
+
+    const levelOrder = (currentNode, level) => {
+      if (!currentNode) {
+        return;
+      }
+
+      if (level === 1) {
+        output.push(currentNode.value);
+      }
+
+      levelOrder(currentNode.left, level - 1);
+      levelOrder(currentNode.right, level - 1);
+    };
+
+    const treeHeight = this.getHeight();
+
+    for (let level = 1; level <= treeHeight; level++) {
+      levelOrder(this.root, level);
+    }
+
+    return output;
+  }
 }
 
 /**
@@ -139,4 +165,7 @@ function testTraversal() {
 
   const postorderDisplay = tree1.printPostorder();
   console.log('\nPostorder representation', postorderDisplay);
+
+  const levelOrderDisplay = tree1.printLevelOrder();
+  console.log('\nLevel order representation', levelOrderDisplay);
 }
