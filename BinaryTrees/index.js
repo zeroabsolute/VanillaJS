@@ -18,6 +18,26 @@ class BinaryTree {
     this.root = null;
   }
 
+  // Tree height
+  getHeight() {
+    const height = (currentNode) => {
+      if (!currentNode) {
+        return 0;
+      }
+
+      const leftSubtreeHeight = height(currentNode.left);
+      const rightSubtreeHeight = height(currentNode.right);
+
+      if (leftSubtreeHeight > rightSubtreeHeight) {
+        return 1 + leftSubtreeHeight;
+      }
+
+      return 1 + rightSubtreeHeight;
+    };
+
+    return height(this.root);
+  }
+
   // Inorder traversal: LEFT -> ROOT -> RIGHT
   printInorder() {
     const output = [];
@@ -99,6 +119,12 @@ function testTraversal() {
   tree1LeftChild.right = tree1RightChildOfLeftChild;
   tree1RightChild.left = tree1LeftChildOfRightChild;
   tree1RightChild.right = tree1RightChildOfRightChild;
+
+  console.log('|-----------------------------------------------------------------------------|');
+  console.log('| TREE HEIGHT                                                                 |');
+  console.log('|-----------------------------------------------------------------------------|');
+
+  console.log(`\nHeight of the tree is ${tree1.getHeight()}\n\n`);
 
 
   console.log('|-----------------------------------------------------------------------------|');
