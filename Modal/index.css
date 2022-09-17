@@ -1,0 +1,76 @@
+:root {
+  --modal-backdrop-color: #000000AA;
+  --modal-box-background-color: #FCFCFC;
+  --modal-box-height: 80%;
+  --modal-box-width: 500px;
+
+  font-size: 16px;
+}
+
+.modal-backdrop {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--modal-backdrop-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation-name: fadein;
+  animation-duration: 0.2s;
+}
+
+.modal-backdrop .modal-box {
+  height: 80%;
+  width: 500px;
+  background-color: var(--modal-box-background-color);
+  border-radius: 5px;
+  position: relative;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  animation-name: grow;
+  animation-duration: 0.2s;
+}
+
+@keyframes fadein {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+@keyframes grow {
+  from { 
+    height: calc(0.9 * var(--modal-box-height)); 
+    width: calc(0.9 * var(--modal-box-width)); 
+  }
+  to {
+    height: var(--modal-box-height);
+    width: var(--modal-box-width);
+  }
+}
+
+.modal-backdrop .modal-box .modal-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.modal-backdrop .modal-box .modal-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.modal-backdrop .modal-box .modal-body {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.modal-backdrop .modal-box .modal-footer {
+  font-style: italic;
+}
