@@ -59,3 +59,15 @@ body {
 #container .app-wrapper .films-grid .film-card .movie-details-container {
   padding: 10px;
 }
+
+@media screen and (max-width: 800px) {
+  #container .app-wrapper .films-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 500px) {
+  #container .app-wrapper .films-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
