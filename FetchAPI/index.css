@@ -1,0 +1,61 @@
+:root {
+  --base-font-size: 16px;
+
+  --primary-color: #687da9;
+  --secondary-color: #FC5858;
+  --page-background: #FBFBFB;
+  --shadow: #00000055;
+  --white: #FFFFFF;
+
+  --header-height: 65px;
+  --app-padding: 15px;
+
+  --default-border-radius: 5px;
+
+  font-size: var(--base-font-size);
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+body {
+  margin: 0;
+}
+
+#container .app-wrapper .header {
+  font-size: 2rem;
+  font-weight: bolder;
+  display: flex;
+  align-items: center;
+  height: var(--header-height);
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 0 var(--app-padding) 0 var(--app-padding);
+  position: fixed;
+  width: 100vw;
+}
+
+#container .app-wrapper .films-grid {
+  padding: calc(var(--header-height) + var(--app-padding)) var(--app-padding) var(--app-padding) var(--app-padding);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: var(--app-padding);
+  background-color: var(--page-background);
+}
+
+#container .app-wrapper .films-grid .film-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white);
+  box-shadow: 0 0 5px var(--shadow);
+  border-radius: var(--default-border-radius);
+}
+
+#container .app-wrapper .films-grid .film-card img {
+  width: 100%;
+  object-fit: cover;
+  border-top-left-radius: var(--default-border-radius);
+  border-top-right-radius: var(--default-border-radius);
+}
+
+#container .app-wrapper .films-grid .film-card .movie-details-container {
+  padding: 10px;
+}

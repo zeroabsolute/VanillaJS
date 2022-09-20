@@ -67,7 +67,9 @@ function buildFilmCard(film) {
   movieDetailsContainer.appendChild(movieTitle);
 
   const movieDescription = document.createElement('p');
-  movieDescription.textContent = film.description;
+  movieDescription.textContent = film.description?.length > 100
+    ? `${film.description.slice(0, 150)}...`
+    : film.description;
   movieDetailsContainer.appendChild(movieDescription);
 
   return filmCard;
